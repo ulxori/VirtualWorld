@@ -9,25 +9,31 @@ class Organizm(ABC):
         self._zywy=True
         self._pozycja=(x,y)
     @abstractmethod
-    def akcja(self): pass
+    def _akcja(self): pass
     @abstractmethod
-    def kolizja(self): pass
+    def _kolizja(self): pass
     @abstractmethod
-    def getNazwa(self): pass
+    def _getNazwa(self): pass
     @abstractmethod
-    def rozmnazajSie(self): pass
-    def getSila(self):
+    def _rozmnazajSie(self): pass
+    def _getSila(self):
         return self._sila
-    def getInicjatywa(self):
+    def _getInicjatywa(self):
         return self._inicjatywa
-    def czyZywy(self):
+    def _czyZywy(self):
         return self._zywy
-    def getId(self):
+    def _getId(self):
         return self._id
-    def setSila(self,sila):
+    def _setSila(self,sila):
         self._sila=sila
-    def doZapisu(self):
-        x,y=*self._pozycja
+    def _doZapisu(self):
+        id=self._id
+        sila=self._sila
+        x,y=self._pozycja
+        str=f"{id} {x} {y} {sila}"
+        return str
+
+
 
 
 

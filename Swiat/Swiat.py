@@ -1,11 +1,14 @@
 import tkinter as tk
 from .Stale import *
+from Organizmy import *
 #stałe
 szerokoscSwiata=720
 wysokoscSwiata=480
 nowaGra='n'
 wczytajgre='l'
 wiadomoscStartowa="Witaj, aby zacząc naciśnij:\nn - Nowa gra \nl - Wczytaj gre"
+
+
 class Swiat(tk.Canvas):
 
     def __init__(self):
@@ -26,6 +29,7 @@ class Swiat(tk.Canvas):
 
     def _nowaGra(self):
         print('sss')
+
 
 
     def _dodajOrganizm(self,id):
