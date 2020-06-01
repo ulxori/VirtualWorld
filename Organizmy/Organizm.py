@@ -1,5 +1,5 @@
 from abc import ABC,abstractmethod
-
+from PIL import Image,ImageTk
 class Organizm(ABC):
     def __init__(self,swiat,sila,inicjatywa,id,x,y):
         self._swiat=swiat
@@ -32,6 +32,8 @@ class Organizm(ABC):
         x,y=self._pozycja
         str=f"{id} {x} {y} {sila}"
         return str
+
+
 
 
 

@@ -1,8 +1,8 @@
 from ..Organizm import *
 
 class Zwierze(Organizm):
-    def __init__(self):
-        super.__init__()
+    def __init__(self,swiat,sila,inicjatywa,id,x,y):
+        super().__init__(swiat,sila,inicjatywa,id,x,y)
 
-    @abstractmethod
-    def czyTenSamGatunek(self, org): pass
+   # @abstractmethod
+    #def czyTenSamGatunek(self, organizm): pass

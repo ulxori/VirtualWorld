@@ -11,7 +11,9 @@ class Id(Enum):
     Guarana=8
     WilczeJagody=9
     BarszczSosnowskiego=10
-    CzlowiekId=11
+    CyberOwca=11
+    Czlowiek=12
+
 
 class Sila(Enum):
     Wilk = 9
