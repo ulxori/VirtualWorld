@@ -32,7 +32,12 @@ class Organizm(ABC):
         x,y=self._pozycja
         str=f"{id} {x} {y} {sila}"
         return str
-
+    def _getPozycja(self):
+        return self._pozycja
+    def _getTextura(self):
+        return self._textura
+    def _setPozycja(self,x,y):
+        self._pozycja=(x,y)
 
 
 

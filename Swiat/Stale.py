@@ -36,3 +36,9 @@ class Inicjatywa(Enum):
     Antylopa = 4
     Czlowiek = 5
     Roslina = 0
+
+class Kierunki(Enum):
+    gora='w'
+    dol='s'
+    prawo='d'
+    lewo='a'

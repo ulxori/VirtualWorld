@@ -3,12 +3,16 @@ from .Stale import *
 from Organizmy import *
 import random
 #stałe
-szerokoscSwiata=720
-wysokoscSwiata=480
+szerokoscSwiata=600
+wysokoscSwiata=600
 nowaGra='n'
 wczytajgre='l'
 liczbaTypowOrganizmow=12
 wiadomoscStartowa="Witaj, aby zacząc naciśnij:\nn - Nowa gra \nl - Wczytaj gre"
+szerokoscPostaci=30
+wysokoscPostaci=30
+w=0
+h=0
 z=None
 
 class Swiat(tk.Canvas):
@@ -39,16 +43,26 @@ class Swiat(tk.Canvas):
             for j in range(2):
                 x,y=self._losowyPunkt()
                 self._dodajOrganizm(i,x,y)
+        self.delete("all")
         self._rozgrywka()
 
     def _rozgrywka(self):
-        self.bind("<Button-1>",self._wykonajTure)
-        self.bind_all("<Key>",self._rysujPlansze)
+
+        self.bind_all("<Key>",self._wykonajTure)
 
     def _wykonajTure(self,e):
-        print(1)
-    def _rysujPlansze(self,e):
-        print(2)
+        self.delete("all")
+        self._setKierunke(e.keysym)
+        self._rysujPlansze()
+
+
+    def _rysujPlansze(self):
+        for row in self._plansza:
+            for el in row:
+                if not el==None:
+                    x,y=el._getPozycja()
+                    self.create_image(x*szerokoscPostaci+15,y*wysokoscPostaci+15,image=el._getTextura())
+                   
 
     def _losowyPunkt(self):
         znaleziony=False
@@ -64,7 +78,7 @@ class Swiat(tk.Canvas):
 
     def _getKierunek(self):
         return self._kierunek
-    
+
     def _dodajCzlowiek(self,x,y):
         tmp=Czlowiek(self,Sila.Czlowiek,Inicjatywa.Czlowiek,Id.Czlowiek,x,y)
         self._kolejkaOrganizmow.append(tmp)
