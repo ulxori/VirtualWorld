@@ -1,6 +1,8 @@
 from .Zwierze import Zwierze
 from abc import ABC, abstractmethod
 from PIL import Image,ImageTk
+from .kierunki import *
+
 
 class Czlowiek(Zwierze):
 
@@ -18,7 +20,19 @@ class Czlowiek(Zwierze):
     def _rozmnazajSie(self):
        pass
     def _akcja(self):
-       pass
+       x,y=self._getPozycja()
+       kierunek=self._swiat._getKierunek()
+       if kierunek==Kierunek.dol.value:
+           y+=1
+       elif kierunek==Kierunek.gora.value:
+           y-=1
+       elif kierunek==Kierunek.prawo.value:
+           x+=1
+       elif kierunek==Kierunek.lewo.value:
+           x-=1
+       if self._swiat._walidujPunkt(x,y):
+           self._setPozycja(x,y)
+
 
     def _czyTenSamGatunek(self,organizm):
         return isinstance(organizm,Czlowiek)

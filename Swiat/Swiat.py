@@ -2,6 +2,8 @@ import tkinter as tk
 from .Stale import *
 from Organizmy import *
 import random
+
+
 #stałe
 szerokoscSwiata=600
 wysokoscSwiata=600
@@ -11,10 +13,12 @@ liczbaTypowOrganizmow=12
 wiadomoscStartowa="Witaj, aby zacząc naciśnij:\nn - Nowa gra \nl - Wczytaj gre"
 szerokoscPostaci=30
 wysokoscPostaci=30
+wysokoscPlanszy=20
+szerokoscPlanszy=20
 w=0
 h=0
 z=None
-
+##############
 class Swiat(tk.Canvas):
 
     def __init__(self):
@@ -23,8 +27,8 @@ class Swiat(tk.Canvas):
         self.bind_all("<Key>",self._inicjujRozgrywke)
         self._plansza=[[z for i in range(20)] for j in range(20)]
         self._kolejkaOrganizmow=[]
-        self._wysokosc=20
-        self._szerokosc=20
+        self._wysokosc=wysokoscPlanszy
+        self._szerokosc=szerokoscPlanszy
         self._kierunek=None
 
     def _inicjujRozgrywke(self,event):
@@ -47,7 +51,7 @@ class Swiat(tk.Canvas):
         self._rozgrywka()
 
     def _rozgrywka(self):
-
+        self._rysujPlansze()
         self.bind_all("<Key>",self._wykonajTure)
 
     def _wykonajTure(self,e):
@@ -62,6 +66,8 @@ class Swiat(tk.Canvas):
                 if not el==None:
                     x,y=el._getPozycja()
                     self.create_image(x*szerokoscPostaci+15,y*wysokoscPostaci+15,image=el._getTextura())
+
+
                    
 
     def _losowyPunkt(self):
@@ -86,8 +92,13 @@ class Swiat(tk.Canvas):
     def _dodajOrganizm(self,id,x,y):
         if id ==Id.Wilk:
             print(1)
-
-
+    def _getKierunek(self):
+        return self._kierunek
+    def _walidujPunkt(self,x,y):
+        if x>=0 and x<szerokoscPlanszy and y>=0 and y<wysokoscPlanszy:
+            return True
+        else:
+            return False
 
 
 
