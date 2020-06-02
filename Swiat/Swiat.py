@@ -19,10 +19,14 @@ niezdefiniowana=0
 w=0
 h=0
 z=None
-##############
+
+
+
 class Swiat(tk.Canvas):
 
+
     def __init__(self):
+
         super().__init__(width=szerokoscSwiata,height=wysokoscSwiata,background="black",highlightthickness=0)
         self.create_text(200,70,text=wiadomoscStartowa,fill="#fff",font=("TkDeaufultFont",24))
         self.bind_all("<Key>",self._inicjujRozgrywke)
@@ -32,28 +36,44 @@ class Swiat(tk.Canvas):
         self._szerokosc=szerokoscPlanszy
         self._kierunek=None
 
+
     def _inicjujRozgrywke(self,event):
+
         if event.keysym==nowaGra:
             self.unbind_all("<Key>")
             self._nowaGra()
+
         elif event.keysym==wczytajgre:
             self.unbind_all("<Key>")
 
 
     def _nowaGra(self):
-        print('sss')
+
         x,y=self._losowyPunkt()
         self._dodajCzlowiek(x,y)
-        for i in range(1,liczbaTypowOrganizmow-1):
+        for i in range(1,liczbaTypowOrganizmow):
             for j in range(2):
                 x,y=self._losowyPunkt()
                 self._dodajOrganizm(i,x,y,niezdefiniowana)
+
         self.delete("all")
         self._rozgrywka()
 
+
     def _rozgrywka(self):
+
         self._rysujPlansze()
         self.bind_all("<Key>",self._wykonajTure)
+        self.bind("<ButtonRelease-1>",self._wstawOrganizm)
+
+    def _wstawOrganizm(self,event):
+        posX=event.x%szerokoscPostaci
+        posY=event.y%wysokoscPostaci
+        if self._walidujPunkt(posX,posY):
+            self.delete("all")
+
+
+
 
     def _wykonajTure(self,e):
         self.delete("all")
@@ -101,6 +121,44 @@ class Swiat(tk.Canvas):
             self._kolejkaOrganizmow.append(WilczeJagody(self,Sila.WilczeJagody.value,Inicjatywa.Roslina.value,Id.WilczeJagody.value,x,y))
             self._plansza[y][x] = self._kolejkaOrganizmow[-1]
 
+        if id==Id.Mlecz.value:
+            self._kolejkaOrganizmow.append(Mlecz(self,Sila.Mlecz.value,Inicjatywa.Roslina.value,Id.Mlecz.value,x,y))
+
+        if id==Id.Guarana.value:
+            self._kolejkaOrganizmow.append(Guarana(self,Sila.Guarana.value,Inicjatywa.Roslina.value,Id.Guarana.value,x,y))
+
+        if id==Id.BarszczSosnowskiego.value:
+            self._kolejkaOrganizmow.append(BarszczSosnowskiego(self,Sila.BarszczSosnowskiego.value,Inicjatywa.Roslina.value,Id.BarszczSosnowskiego.value,x,y))
+
+        if id==Id.Antylopa.value:
+            if sila<Sila.Antylopa.value:
+                sila=Sila.Antylopa.value
+            self._kolejkaOrganizmow.append(Antylopa(self,sila,Inicjatywa.Antylopa.value,Id.Antylopa.value,x,y))
+
+        if id==Id.CyberOwca.value:
+            if sila<Sila.CyberOwca.value:
+                sila=Sila.CyberOwca.value
+            self._kolejkaOrganizmow.append(CyberOwca(self,sila,Inicjatywa.CyberOwca.value,Id.CyberOwca.value,x,y))
+
+        if id==Id.Lis.value:
+            if sila<Sila.Lis.value:
+                sila=Sila.Lis.value
+            self._kolejkaOrganizmow.append(Lis(self,sila,Inicjatywa.Lis.value,Id.Lis.value,x,y))
+        if id==Id.Owca.value:
+            if sila<Sila.Owca.value:
+                sila=Sila.Owca.value
+            self._kolejkaOrganizmow.append(Owca(self,sila,Inicjatywa.Owca.value,Id.Owca.value,x,y))
+        if id==Id.Wilk.value:
+            if sila<Sila.Wilk.value:
+                sila=Sila.Wilk.value
+            self._kolejkaOrganizmow.append(Lis(self,sila,Inicjatywa.Lis.value,Id.Lis.value,x,y))
+        if id==Id.Zolw.value:
+            if sila<Sila.Zolw.value:
+                sila=Sila.Zolw.value
+            self._kolejkaOrganizmow.append(Zolw(self,sila,Inicjatywa.Zolw.value,Id.Zolw.value,x,y))
+
+
+        self._plansza[y][x] = self._kolejkaOrganizmow[-1]
 
 
     def _getKierunek(self):

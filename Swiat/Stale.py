@@ -27,6 +27,7 @@ class Sila(Enum):
     WilczeJagody = 99
     BarszczSosnowskiego = 10
     Czlowiek = 5
+    CyberOwca = 11
 
 class Inicjatywa(Enum):
     Wilk = 5
@@ -35,6 +36,7 @@ class Inicjatywa(Enum):
     Zolw = 1
     Antylopa = 4
     Czlowiek = 5
+    CyberOwca= 4
     Roslina = 0
 
 class Kierunki(Enum):
@@ -42,3 +44,4 @@ class Kierunki(Enum):
     dol='s'
     prawo='d'
     lewo='a'
+

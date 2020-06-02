@@ -14,8 +14,7 @@ class Organizm(ABC):
     def _kolizja(self): pass
     @abstractmethod
     def _getNazwa(self): pass
-    @abstractmethod
-    def _rozmnazajSie(self): pass
+
     @abstractmethod
     def _zwrocKopie(self,x,y): pass
     def _getSila(self):
@@ -47,6 +46,14 @@ class Organizm(ABC):
     def _umrzyj(self):
         self._zywy=False
         self._swiat._usunOrganizm(self)
+
+    def _rozmnazajSie(self):
+        wolnePola = self._swiat._getSasiedniePola(*self._getPozycja())
+        for x, y in wolnePola:
+            if self._swiat._getZawartoscPunktu(x, y) == None:
+                tmp = self._zwrocKopie(x, y)
+                self._swiat._umiescNaPlanszy(tmp)
+                break
 
 
 

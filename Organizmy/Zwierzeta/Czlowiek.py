@@ -15,10 +15,8 @@ class Czlowiek(Zwierze):
     def _getNazwa(self):
        return "Czlowiek"
 
-    def _kolizja(self):
-       pass
-    def _rozmnazajSie(self):
-       pass
+
+
     def _akcja(self):
        x,y=self._getPozycja()
        kierunek=self._swiat._getKierunek()
