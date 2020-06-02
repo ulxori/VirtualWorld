@@ -5,5 +5,5 @@ class Zwierze(Organizm):
         super().__init__(swiat,sila,inicjatywa,id,x,y)
 
 
-   # @abstractmethod
-    #def czyTenSamGatunek(self, organizm): pass
+    @abstractmethod
+    def _czyTenSamGatunek(self, organizm): pass

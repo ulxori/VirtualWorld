@@ -16,6 +16,8 @@ class Organizm(ABC):
     def _getNazwa(self): pass
     @abstractmethod
     def _rozmnazajSie(self): pass
+    @abstractmethod
+    def _zwrocKopie(self,x,y): pass
     def _getSila(self):
         return self._sila
     def _getInicjatywa(self):
@@ -39,6 +41,12 @@ class Organizm(ABC):
     def _setPozycja(self,x,y):
         self._pozycja=(x,y)
 
+
+    def _zwiekszSile(self,boost):
+        self._sila=self._getSila()+boost
+    def _umrzyj(self):
+        self._zywy=False
+        self._swiat._usunOrganizm(self)
 
 
 

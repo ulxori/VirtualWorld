@@ -15,6 +15,7 @@ szerokoscPostaci=30
 wysokoscPostaci=30
 wysokoscPlanszy=20
 szerokoscPlanszy=20
+niezdefiniowana=0
 w=0
 h=0
 z=None
@@ -46,7 +47,7 @@ class Swiat(tk.Canvas):
         for i in range(1,liczbaTypowOrganizmow-1):
             for j in range(2):
                 x,y=self._losowyPunkt()
-                self._dodajOrganizm(i,x,y)
+                self._dodajOrganizm(i,x,y,niezdefiniowana)
         self.delete("all")
         self._rozgrywka()
 
@@ -57,6 +58,8 @@ class Swiat(tk.Canvas):
     def _wykonajTure(self,e):
         self.delete("all")
         self._setKierunke(e.keysym)
+        for org in self._kolejkaOrganizmow:
+            org._akcja()
         self._rysujPlansze()
 
 
@@ -86,19 +89,67 @@ class Swiat(tk.Canvas):
         return self._kierunek
 
     def _dodajCzlowiek(self,x,y):
-        tmp=Czlowiek(self,Sila.Czlowiek,Inicjatywa.Czlowiek,Id.Czlowiek,x,y)
+        tmp=Czlowiek(self,Sila.Czlowiek.value,Inicjatywa.Czlowiek.value,Id.Czlowiek.value,x,y)
         self._kolejkaOrganizmow.append(tmp)
         self._plansza[y][x]=tmp
-    def _dodajOrganizm(self,id,x,y):
-        if id ==Id.Wilk:
-            print(1)
+    def _dodajOrganizm(self,id,x,y,sila):
+        if id ==Id.Trawa.value:
+            self._kolejkaOrganizmow.append(Trawa(self,Sila.Trawa.value,Inicjatywa.Roslina.value,Id.Trawa.value,x,y))
+            self._plansza[y][x] = self._kolejkaOrganizmow[-1]
+
+        if id==Id.WilczeJagody.value:
+            self._kolejkaOrganizmow.append(WilczeJagody(self,Sila.WilczeJagody.value,Inicjatywa.Roslina.value,Id.WilczeJagody.value,x,y))
+            self._plansza[y][x] = self._kolejkaOrganizmow[-1]
+
+
+
     def _getKierunek(self):
         return self._kierunek
+
     def _walidujPunkt(self,x,y):
         if x>=0 and x<szerokoscPlanszy and y>=0 and y<wysokoscPlanszy:
             return True
         else:
             return False
+
+    def _getSasiedniePola(self,x,y):
+        sasiedniePola=[]
+        for i in range(3):
+            posY=y-1+i
+            for j in range(3):
+                posX=x-1+j
+                if self._walidujPunkt(posX,posY):
+                    if i==1 and j==1:
+                        continue
+                    else:
+                        sasiedniePola.append((posX,posY))
+        return sasiedniePola
+
+    def _getZawartoscPunktu(self,x,y):
+        return self._plansza[y][x]
+
+
+    def _umiescNaPlanszy(self,organizm):
+
+        x,y=organizm._getPozycja()
+        self._plansza[y][x]=organizm
+        self._kolejkaOrganizmow.append(organizm)
+
+
+    def _usunOrganizm(self,organizm):
+
+        x,y=organizm._getPozycja()
+        self._plansza[y][x]=None
+        self._kolejkaOrganizmow.remove(organizm)
+
+
+    def _przesunOrganizm(self,x,y,organizm):
+
+        xPoprzadnie, yPoprzednie=organizm._getPozycja()
+        self._plansza[yPoprzednie][xPoprzadnie]=None
+        self._plansza[y][x]=organizm
+        organizm._setPozycja(x,y)
+
 
 
 

@@ -31,10 +31,18 @@ class Czlowiek(Zwierze):
        elif kierunek==Kierunek.lewo.value:
            x-=1
        if self._swiat._walidujPunkt(x,y):
-           self._setPozycja(x,y)
-
+            tmp=self._swiat._getZawartoscPunktu(x,y)
+            if tmp==None:
+                self._swiat._przesunOrganizm(x,y,self)
+            else:
+                tmp._kolizja(self)
+                if self._zywy==True:
+                    self._swiat._przesunOrganizm(x, y, self)
 
     def _czyTenSamGatunek(self,organizm):
         return isinstance(organizm,Czlowiek)
+
+    def _zwrocKopie(self): pass
+
 
 
