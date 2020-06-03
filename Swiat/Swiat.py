@@ -4,6 +4,7 @@ from Organizmy import *
 import random
 from PIL import Image, ImageTk
 import math
+from .Komentator import Komentator
 #stałe
 szerokoscSwiata=600
 wysokoscSwiata=600
@@ -37,6 +38,8 @@ class Swiat(tk.Canvas):
         self._wysokosc=wysokoscPlanszy
         self._szerokosc=szerokoscPlanszy
         self._kierunek=None
+        self._komentator=Komentator()
+
 
 
     def _inicjujRozgrywke(self,event):
@@ -285,6 +288,9 @@ class Swiat(tk.Canvas):
         odlegloscX=x1-x
         odlegloscY=y1-y
         return math.sqrt(math.pow(odlegloscX,2)+math.pow(odlegloscY,2))
+
+    def _getKomentator(self):
+        return self._komentator
 
 
 

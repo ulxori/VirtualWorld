@@ -44,6 +44,7 @@ class Organizm(ABC):
     def _zwiekszSile(self,boost):
         self._sila=self._getSila()+boost
     def _umrzyj(self):
+        self._swiat._getKomentator()._powiadomOSmierci(self)
         self._zywy=False
         self._swiat._usunOrganizm(self)
 
@@ -52,6 +53,7 @@ class Organizm(ABC):
         for x, y in wolnePola:
             if self._swiat._getZawartoscPunktu(x, y) == None:
                 tmp = self._zwrocKopie(x, y)
+                self._swiat._getKomentator(). _rozmnazanieWiadomosc(self)
                 self._swiat._umiescNaPlanszy(tmp)
                 break
 

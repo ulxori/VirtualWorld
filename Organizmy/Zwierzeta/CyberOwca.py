@@ -1,7 +1,7 @@
 from .Zwierze import Zwierze
 from PIL import Image, ImageTk
 from .kierunki import *
-
+import random
 
 class CyberOwca(Zwierze):
     __texturaSciezka = "cyberOwca.png"
@@ -22,16 +22,15 @@ class CyberOwca(Zwierze):
                 yA+=1
             elif yB<yA:
                 yA-=1
-        if self._swiat._walidujPunkt(xA, yA):
-            tmp = self._swiat._getZawartoscPunktu(xA, yA)
-            if tmp == None:
-                self._swiat._przesunOrganizm(xA, yA, self)
-            else:
-                tmp._kolizja(self)
-
-
-
-
+            if self._swiat._walidujPunkt(xA, yA):
+                tmp = self._swiat._getZawartoscPunktu(xA, yA)
+                if tmp == None:
+                 self._swiat._przesunOrganizm(xA, yA, self)
+                else:
+                    tmp._kolizja(self)
+        else:
+            kierunek = random.randint(0, 3)
+            self._move(kierunek)
 
     def _getNazwa(self):
         return "Cyber owca"
