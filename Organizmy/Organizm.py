@@ -31,7 +31,7 @@ class Organizm(ABC):
         id=self._id
         sila=self._sila
         x,y=self._pozycja
-        str=f"{id} {x} {y} {sila}"
+        str=f"{id} {x} {y} {sila}\n"
         return str
     def _getPozycja(self):
         return self._pozycja

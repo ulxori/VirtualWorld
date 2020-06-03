@@ -2,7 +2,7 @@ import tkinter as tk
 from .Stale import *
 from Organizmy import *
 import random
-
+from PIL import Image, ImageTk
 
 #stałe
 szerokoscSwiata=600
@@ -19,7 +19,7 @@ niezdefiniowana=0
 w=0
 h=0
 z=None
-
+textura="Swiat.png"
 
 
 class Swiat(tk.Canvas):
@@ -32,6 +32,8 @@ class Swiat(tk.Canvas):
         self.bind_all("<Key>",self._inicjujRozgrywke)
         self._plansza=[[z for i in range(20)] for j in range(20)]
         self._kolejkaOrganizmow=[]
+        self._punktDlaNowegoOrganizmu=()
+        self._menuSwiata=ImageTk.PhotoImage((Image.open(textura)))
         self._wysokosc=wysokoscPlanszy
         self._szerokosc=szerokoscPlanszy
         self._kierunek=None
@@ -45,12 +47,33 @@ class Swiat(tk.Canvas):
 
         elif event.keysym==wczytajgre:
             self.unbind_all("<Key>")
+            self._wczytajGre()
+            self._rozgrywka()
+
+    def _wczytajGre(self):
+        zapis=open("save.txt","r")
+
+        for line in zapis:
+            line=line.split()
+            id=int(line[0])
+            x=int(line[1])
+            y=int(line[2])
+            sila=int(line[3])
+            if id==Id.Czlowiek.value:
+                czyAktywna=line[4]
+                pozostaleTury=int(line[5])
+                self._dodajCzlowiek(sila,x,y,czyAktywna,pozostaleTury)
+            else:
+                self._dodajOrganizm(id, x, y, niezdefiniowana)
+        zapis.close()
+        self.delete("all")
+
 
 
     def _nowaGra(self):
 
         x,y=self._losowyPunkt()
-        self._dodajCzlowiek(x,y,False,5)
+        self._dodajCzlowiek(x,y,Sila.Czlowiek.value,False,5)
         for i in range(1,liczbaTypowOrganizmow):
             for j in range(2):
                 x,y=self._losowyPunkt()
@@ -61,25 +84,53 @@ class Swiat(tk.Canvas):
 
 
     def _rozgrywka(self):
-
         self._rysujPlansze()
+        self.bind_all("<Button-1>", self._przechwycPole)
         self.bind_all("<Key>",self._wykonajTure)
-        #self.bind("<ButtonRelease-1>",self._wstawOrganizm)
+        self.bind_all("<Tab>",self._zapiszGre)
+
+    def _przechwycPole(self,event):
+        self.delete("all")
+        self.create_image(165, 15, image=self._getMenuSwiat())
+
+        posX=int(event.x/szerokoscPostaci)
+        posY=int(event.y/wysokoscPostaci)
+        if self._getZawartoscPunktu(x=posX,y=posY)==None:
+            self.setPunktDlaNowegoOrganizmu(posX,posY)
+            self.bind_all("<Button-3>",self._wstawOrganizm)
+
+
+
+    def setPunktDlaNowegoOrganizmu(self,x,y):
+        self._punktDlaNowegoOrganizmu=(x,y)
 
     def _wstawOrganizm(self,event):
-        posX=event.x%szerokoscPostaci
-        posY=event.y%wysokoscPostaci
-        if self._walidujPunkt(posX,posY):
-            self.delete("all")
+       id=int((event.x/szerokoscPostaci)+1)
+       self._dodajOrganizm(id,*self._punktDlaNowegoOrganizmu,niezdefiniowana)
+       self.unbind_all("<Button-3>")
+       self.delete("all")
+       self._rysujPlansze()
 
 
+
+    def _getMenuSwiat(self):
+        return self._menuSwiata
+
+
+    def _getPunktDlaNowego(self):
+        return self._punktDlaNowegoOrganizmu()
 
 
     def _wykonajTure(self,e):
         self.delete("all")
         self._setKierunke(e.keysym)
+        liczbaOrganizmow=len(self._kolejkaOrganizmow)
+        counter=0
         for org in self._kolejkaOrganizmow:
             org._akcja()
+            if counter==liczbaOrganizmow:
+                break
+            counter+=1
         self._rysujPlansze()
 
 
@@ -108,8 +159,8 @@ class Swiat(tk.Canvas):
     def _getKierunek(self):
         return self._kierunek
 
-    def _dodajCzlowiek(self,x,y,czyAktywna,pozostaleTury):
-        tmp=Czlowiek(self,Sila.Czlowiek.value,Inicjatywa.Czlowiek.value,Id.Czlowiek.value,x,y,czyAktywna,pozostaleTury)
+    def _dodajCzlowiek(self,sila,x,y,czyAktywna,pozostaleTury):
+        tmp=Czlowiek(self,sila,Inicjatywa.Czlowiek.value,Id.Czlowiek.value,x,y,czyAktywna,pozostaleTury)
         self._kolejkaOrganizmow.append(tmp)
         self._plansza[y][x]=tmp
     def _dodajOrganizm(self,id,x,y,sila):
@@ -210,6 +261,14 @@ class Swiat(tk.Canvas):
         self._plansza[yPoprzednie][xPoprzadnie]=None
         self._plansza[y][x]=organizm
         organizm._setPozycja(x,y)
+
+    def _zapiszGre(self,event):
+        zapisGry=open("save.txt",'w')
+        for el in self._kolejkaOrganizmow:
+            str=el._doZapisu()
+            zapisGry.write(str)
+        zapisGry.close()
+
 
 
 
