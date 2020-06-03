@@ -17,4 +17,4 @@ class Owca(Zwierze):
         return isinstance(organizm, Owca)
 
     def _zwrocKopie(self, x, y):
-        return Owca(self._swiat, self._getSila(), self._getInicjatywa(), x, y)
+        return Owca(self._swiat, self._getSila(), self._getInicjatywa(),self._getId(), x, y)

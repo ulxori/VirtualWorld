@@ -14,13 +14,14 @@ class Antylopa(Zwierze):
         self._textura = ImageTk.PhotoImage((Image.open(self.__texturaSciezka)))
 
     def _akcja(self):
-        kierunek = random.randint(4)
+        kierunek = random.randint(0,3)
         self._move(kierunek)
-        self._move(kierunek)
+        if self._czyZywy():
+            self._move(kierunek)
 
     def _kolizja(self,atakujacy):
         wolnePola = self._swiat._getSasiedniePola(*self._getPozycja())
-        szansa=random.randint(100)
+        szansa=random.randint(0,100)
         if szansa<szansaUcieczki and wolnePola:
             x,y= wolnePola[0]
             self._swiat._przesunOrganizm(x,y,self)
@@ -37,5 +38,5 @@ class Antylopa(Zwierze):
         return isinstance(organizm,Antylopa)
 
     def _zwrocKopie(self,x,y):
-        return Antylopa(self._swiat,self._getSila(),self._getInicjatywa(),x,y)
+        return Antylopa(self._swiat,self._getSila(),self._getInicjatywa(),self._getId(),x,y)
 

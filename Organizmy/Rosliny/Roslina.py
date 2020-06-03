@@ -3,7 +3,7 @@ import random
 
 #stale
 liczbaProbRozmazania=3
-szansaRozmnozenia=50
+szansaRozmnozenia=70
 
 
 class Roslina(Organizm):

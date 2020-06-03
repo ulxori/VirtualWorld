@@ -25,4 +25,4 @@ class Zolw(Zwierze):
         return isinstance(organizm, Zolw)
 
     def _zwrocKopie(self, x, y):
-        return Zolw(self._swiat, self._getSila(), self._getInicjatywa(), x, y)
+        return Zolw(self._swiat, self._getSila(), self._getInicjatywa(),self._getId(), x, y)

@@ -1,5 +1,6 @@
 from .Roslina import Roslina
 from ..Zwierzeta import CyberOwca
+from ..Zwierzeta import Zwierze
 from PIL import Image, ImageTk
 import random
 #stale
@@ -29,7 +30,7 @@ class BarszczSosnowskiego(Roslina):
         sasiedniePola = self._swiat._getSasiedniePola(*self._getPozycja())
         for x, y in sasiedniePola:
             tmp=self._swiat._getZawartoscPunktu(x, y)
-            if not tmp==None:
+            if not tmp==None and isinstance(tmp,Zwierze):
                 tmp._umrzyj()
     def _kolizja(self,atakujacy):
         if isinstance(atakujacy,CyberOwca):

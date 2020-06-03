@@ -37,4 +37,4 @@ class Lis(Zwierze):
         return isinstance(organizm, Lis)
 
     def _zwrocKopie(self, x, y):
-        return Lis(self._swiat, self._getSila(), self._getInicjatywa(), x, y)
+        return Lis(self._swiat, self._getSila(), self._getInicjatywa(),self._getId(), x, y)

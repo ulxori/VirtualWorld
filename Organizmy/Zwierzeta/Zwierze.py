@@ -34,7 +34,7 @@ class Zwierze(Organizm):
 
     def _kolizja(self,atakujacy):
 
-        if self._czyTenSamGatuenk(atakujacy):
+        if self._czyTenSamGatunek(atakujacy):
             self._rozmnazajSie()
         else:
             if self._getSila()>atakujacy._getSila():

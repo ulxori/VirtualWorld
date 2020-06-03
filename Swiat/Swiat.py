@@ -50,7 +50,7 @@ class Swiat(tk.Canvas):
     def _nowaGra(self):
 
         x,y=self._losowyPunkt()
-        self._dodajCzlowiek(x,y)
+        self._dodajCzlowiek(x,y,False,5)
         for i in range(1,liczbaTypowOrganizmow):
             for j in range(2):
                 x,y=self._losowyPunkt()
@@ -64,7 +64,7 @@ class Swiat(tk.Canvas):
 
         self._rysujPlansze()
         self.bind_all("<Key>",self._wykonajTure)
-        self.bind("<ButtonRelease-1>",self._wstawOrganizm)
+        #self.bind("<ButtonRelease-1>",self._wstawOrganizm)
 
     def _wstawOrganizm(self,event):
         posX=event.x%szerokoscPostaci
@@ -108,18 +108,18 @@ class Swiat(tk.Canvas):
     def _getKierunek(self):
         return self._kierunek
 
-    def _dodajCzlowiek(self,x,y):
-        tmp=Czlowiek(self,Sila.Czlowiek.value,Inicjatywa.Czlowiek.value,Id.Czlowiek.value,x,y)
+    def _dodajCzlowiek(self,x,y,czyAktywna,pozostaleTury):
+        tmp=Czlowiek(self,Sila.Czlowiek.value,Inicjatywa.Czlowiek.value,Id.Czlowiek.value,x,y,czyAktywna,pozostaleTury)
         self._kolejkaOrganizmow.append(tmp)
         self._plansza[y][x]=tmp
     def _dodajOrganizm(self,id,x,y,sila):
         if id ==Id.Trawa.value:
             self._kolejkaOrganizmow.append(Trawa(self,Sila.Trawa.value,Inicjatywa.Roslina.value,Id.Trawa.value,x,y))
-            self._plansza[y][x] = self._kolejkaOrganizmow[-1]
+
 
         if id==Id.WilczeJagody.value:
             self._kolejkaOrganizmow.append(WilczeJagody(self,Sila.WilczeJagody.value,Inicjatywa.Roslina.value,Id.WilczeJagody.value,x,y))
-            self._plansza[y][x] = self._kolejkaOrganizmow[-1]
+
 
         if id==Id.Mlecz.value:
             self._kolejkaOrganizmow.append(Mlecz(self,Sila.Mlecz.value,Inicjatywa.Roslina.value,Id.Mlecz.value,x,y))
@@ -151,7 +151,7 @@ class Swiat(tk.Canvas):
         if id==Id.Wilk.value:
             if sila<Sila.Wilk.value:
                 sila=Sila.Wilk.value
-            self._kolejkaOrganizmow.append(Lis(self,sila,Inicjatywa.Lis.value,Id.Lis.value,x,y))
+            self._kolejkaOrganizmow.append(Wilk(self,sila,Inicjatywa.Lis.value,Id.Lis.value,x,y))
         if id==Id.Zolw.value:
             if sila<Sila.Zolw.value:
                 sila=Sila.Zolw.value
@@ -195,6 +195,9 @@ class Swiat(tk.Canvas):
 
 
     def _usunOrganizm(self,organizm):
+
+        if not organizm in self._kolejkaOrganizmow:
+            print(1)
 
         x,y=organizm._getPozycja()
         self._plansza[y][x]=None

@@ -5,7 +5,7 @@ from .kierunki import *
 
 
 class Wilk(Zwierze):
-    __texturaSciezka = "wilk.png"
+    __texturaSciezka = "wolf.png"
 
     def __init__(self, swiat, sila, inicjatywa, id, x, y):
         super().__init__(swiat, sila, inicjatywa, id, x, y)
@@ -18,4 +18,4 @@ class Wilk(Zwierze):
         return isinstance(organizm, Wilk)
 
     def _zwrocKopie(self, x, y):
-        return Wilk(self._swiat, self._getSila(), self._getInicjatywa(), x, y)
+        return Wilk(self._swiat, self._getSila(), self._getInicjatywa(),self._getId(), x, y)

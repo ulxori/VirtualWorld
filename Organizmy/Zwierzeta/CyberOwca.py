@@ -17,4 +17,4 @@ class CyberOwca(Zwierze):
         return isinstance(organizm, CyberOwca)
 
     def _zwrocKopie(self, x, y):
-        return CyberOwca(self._swiat, self._getSila(), self._getInicjatywa(), x, y)
+        return CyberOwca(self._swiat, self._getSila(), self._getInicjatywa(),self._getId(), x, y)
