@@ -27,8 +27,7 @@ class Lis(Zwierze):
             else:
                 if tmp._getSila()<self._getSila():
                     tmp._kolizja(self)
-                    if self._zywy == True:
-                        self._swiat._przesunOrganizm(x, y, self)
+
 
     def _getNazwa(self):
         return "Lis"

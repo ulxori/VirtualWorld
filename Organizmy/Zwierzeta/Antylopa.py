@@ -29,7 +29,9 @@ class Antylopa(Zwierze):
             if self._getSila()> atakujacy._getSila():
                 atakujacy._umrzyj()
             else:
+                x, y = self._getPozycja()
                 self._umrzyj()
+                atakujacy._swiat._przesunOrganizm(x, y, atakujacy)
 
     def _getNazwa(self):
         return "Antylopa"

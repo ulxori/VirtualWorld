@@ -30,7 +30,7 @@ class BarszczSosnowskiego(Roslina):
         sasiedniePola = self._swiat._getSasiedniePola(*self._getPozycja())
         for x, y in sasiedniePola:
             tmp=self._swiat._getZawartoscPunktu(x, y)
-            if not tmp==None and isinstance(tmp,Zwierze):
+            if not tmp==None and isinstance(tmp,Zwierze) and not isinstance(tmp,CyberOwca):
                 tmp._umrzyj()
     def _kolizja(self,atakujacy):
         if isinstance(atakujacy,CyberOwca):

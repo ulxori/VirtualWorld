@@ -26,3 +26,15 @@ class Zolw(Zwierze):
 
     def _zwrocKopie(self, x, y):
         return Zolw(self._swiat, self._getSila(), self._getInicjatywa(),self._getId(), x, y)
+
+
+    def _kolizja(self,atakujacy):
+        if self._czyTenSamGatunek(atakujacy):
+            self._rozmnazajSie()
+        else:
+            if atakujacy._getSila()<5:
+                atakujacy._umrzyj()
+            else:
+                x, y = self._getPozycja()
+                self._umrzyj()
+                atakujacy._swiat._przesunOrganizm(x, y, atakujacy)

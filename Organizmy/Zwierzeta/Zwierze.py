@@ -29,8 +29,7 @@ class Zwierze(Organizm):
                 self._swiat._przesunOrganizm(x, y, self)
             else:
                 tmp._kolizja(self)
-                if self._zywy == True:
-                    self._swiat._przesunOrganizm(x, y, self)
+
 
     def _kolizja(self,atakujacy):
 
@@ -40,7 +39,9 @@ class Zwierze(Organizm):
             if self._getSila()>atakujacy._getSila():
                 atakujacy._umrzyj()
             else:
+                x,y=self._getPozycja()
                 self._umrzyj()
+                atakujacy._swiat._przesunOrganizm(x, y, atakujacy)
 
 
 
