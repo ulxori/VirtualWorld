@@ -3,7 +3,7 @@ from .Stale import *
 from Organizmy import *
 import random
 from PIL import Image, ImageTk
-
+import math
 #stałe
 szerokoscSwiata=600
 wysokoscSwiata=600
@@ -269,8 +269,22 @@ class Swiat(tk.Canvas):
             zapisGry.write(str)
         zapisGry.close()
 
+    def _szukajNajblizszegoBarszczu(self,x,y):
+        najmniejszaOdleglosc=10000
+        najblizszyBarszcz=None
+        for el in self._kolejkaOrganizmow:
+            if isinstance(el,BarszczSosnowskiego):
+                dystans=self._liczDystans(x,y,*el._getPozycja())
+                if dystans<najmniejszaOdleglosc:
+                    najmniejszaOdleglosc=dystans
+                    najblizszyBarszcz=el
+        return najblizszyBarszcz
 
 
+    def _liczDystans(self,x,y,x1,y1):
+        odlegloscX=x1-x
+        odlegloscY=y1-y
+        return math.sqrt(math.pow(odlegloscX,2)+math.pow(odlegloscY,2))
 
 
 

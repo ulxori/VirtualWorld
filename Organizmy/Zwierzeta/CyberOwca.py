@@ -10,7 +10,25 @@ class CyberOwca(Zwierze):
         super().__init__(swiat, sila, inicjatywa, id, x, y)
         self._textura = ImageTk.PhotoImage((Image.open(self.__texturaSciezka)))
     def _akcja(self):
-        
+        barszcz=self._swiat._szukajNajblizszegoBarszczu(*self._getPozycja())
+        if barszcz!=None:
+            xB,yB=barszcz._getPozycja()
+            xA,yA=self._getPozycja()
+            if xB>xA:
+                xA+=1
+            elif xB<xA:
+                xA-=1
+            elif yB>yA:
+                yA+=1
+            elif yB<yA:
+                yA-=1
+        if self._swiat._walidujPunkt(xA, yA):
+            tmp = self._swiat._getZawartoscPunktu(xA, yA)
+            if tmp == None:
+                self._swiat._przesunOrganizm(xA, yA, self)
+            else:
+                tmp._kolizja(self)
+
 
 
 
